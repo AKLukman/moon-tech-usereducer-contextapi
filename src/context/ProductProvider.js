@@ -1,26 +1,21 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useReducer,
-  useState,
-} from "react";
+import React, { createContext } from "react";
+import { useReducer } from "react";
+import { useContext } from "react";
+import { useEffect } from "react";
 import { actionTypes } from "../state/ProductState/actionTypes";
 import {
+  initilastate,
   productReducer,
-  initialState,
 } from "../state/ProductState/productReducer";
-
 const PRODUCT_CONTEXT = createContext();
 
 const ProductProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(productReducer, initialState);
-
+  const [state, dispatch] = useReducer(productReducer, initilastate);
   console.log(state);
 
   useEffect(() => {
     dispatch({ type: actionTypes.FETCHING_START });
-    fetch("http://localhost:5000/products")
+    fetch("http://localhost:5000/api/v1/products")
       .then((res) => res.json())
       .then((data) =>
         dispatch({ type: actionTypes.FETCHING_SUCCESS, payload: data.data })
@@ -34,7 +29,6 @@ const ProductProvider = ({ children }) => {
     state,
     dispatch,
   };
-
   return (
     <PRODUCT_CONTEXT.Provider value={value}>
       {children}

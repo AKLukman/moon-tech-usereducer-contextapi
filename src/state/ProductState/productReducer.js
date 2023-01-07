@@ -1,6 +1,6 @@
 import { actionTypes } from "./actionTypes";
 
-export const initialState = {
+export const initilastate = {
   loading: false,
   products: [],
   error: false,
@@ -33,6 +33,11 @@ export const productReducer = (state, action) => {
       return {
         ...state,
         cart: [...state.cart, action.payload],
+      };
+    case actionTypes.ADD_TO_WISH_LIST:
+      return {
+        ...state,
+        wishlist: [...state.wishlist, action.payload],
       };
     default:
       return state;
